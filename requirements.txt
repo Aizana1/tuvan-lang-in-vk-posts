@@ -1,6 +1,3 @@
-requests
-pandas
-tqdm
-python-dotenv
 aiohttp
-asyncio
+pandas
+python-dotenv
