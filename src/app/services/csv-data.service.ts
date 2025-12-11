@@ -37,9 +37,9 @@ export class CsvDataService {
   private readonly basePath: string;
 
   private readonly CSV_FILES = [
-    { path: 'dataset/results/results_community_media_posts.csv', source: 'community' as const },
-    { path: 'dataset/results/results_gov_institutions_posts.csv', source: 'government' as const },
-    { path: 'dataset/results/results_official_media_posts.csv', source: 'official' as const }
+    { path: 'assets/results_community_media_posts.csv', source: 'community' as const },
+    { path: 'assets/results_gov_institutions_posts.csv', source: 'government' as const },
+    { path: 'assets/results_official_media_posts.csv', source: 'official' as const }
   ];
 
   constructor(
