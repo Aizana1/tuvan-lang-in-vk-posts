@@ -1,142 +1,155 @@
-<!-- data-visualization.component.html -->
 <div class="container">
-    <!-- Переключатель языка -->
-    <div class="language-switcher">
-      <button class="lang-button" (click)="toggleLanguage()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-        </svg>
-        {{ translationService.translate('switchLanguage') }}
-      </button>
+  <div class="language-switcher">
+    <button class="lang-button" (click)="toggleLanguage()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="2" y1="12" x2="22" y2="12"></line>
+        <path
+          d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+        ></path>
+      </svg>
+      {{ translationService.translate("switchLanguage") }}
+    </button>
+  </div>
+
+  <h1>{{ translationService.translate("pageTitle") }}</h1>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>{{ translationService.translate("loading") }}</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <strong>{{ translationService.translate("error") }}</strong>
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <div class="filters-panel">
+      <div class="filter-group">
+        <h3>{{ translationService.translate("selectYears") }}</h3>
+        <div class="checkbox-group">
+          <label *ngFor="let year of availableYears" class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="selectedYears.includes(year)"
+              (change)="onYearChange(year, $event)"
+            />
+            {{ year }}
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h3>{{ translationService.translate("dataType") }}</h3>
+        <div class="checkbox-group">
+          <label *ngFor="let type of availableTypes" class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="selectedTypes.includes(type)"
+              (change)="onTypeChange(type, $event)"
+            />
+            {{ translationService.translateDataType(type) }}
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h3>{{ translationService.translate("dataSources") }}</h3>
+        <div class="checkbox-group">
+          <label *ngFor="let source of availableSources" class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="selectedSources.includes(source.value)"
+              (change)="onSourceChange(source.value, $event)"
+            />
+            {{ source.label }}
+          </label>
+        </div>
+      </div>
     </div>
-  
-    <h1>{{ translationService.translate('pageTitle') }}</h1>
-    
-    <!-- Индикатор загрузки -->
-    <div *ngIf="isLoading" class="loading-container">
-      <div class="spinner"></div>
-      <p>{{ translationService.translate('loading') }}</p>
+
+    <div class="charts-container">
+      <div class="chart-wrapper">
+        <canvas #lineChart></canvas>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas #barChart></canvas>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas #stackedBarChart></canvas>
+      </div>
+
+      <div class="chart-wrapper chart-small">
+        <canvas #pieChart></canvas>
+      </div>
     </div>
-  
-    <!-- Сообщение об ошибке -->
-    <div *ngIf="errorMessage" class="error-message">
-      <strong>{{ translationService.translate('error') }}</strong> {{ errorMessage }}
+
+    <div class="data-summary" *ngIf="getFilteredData().length > 0">
+      <h3>{{ translationService.translate("summaryTitle") }}</h3>
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="card-title">
+            {{ translationService.translate("totalRecords") }}
+          </div>
+          <div class="card-value">
+            {{ getTotalSum() | number }}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="card-title">
+            {{ translationService.translate("tuvanNgu") }}
+          </div>
+          <div class="card-value">
+            {{ getTuvanNguSum() | number }}
+          </div>
+          <div class="card-subtitle">
+            {{ getTuvanNguAvgPercent().toFixed(2) }}%
+            {{ translationService.translate("average") }}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="card-title">
+            {{ translationService.translate("tuvanRusKeyboard") }}
+          </div>
+          <div class="card-value">
+            {{ getTuvanRusSum() | number }}
+          </div>
+          <div class="card-subtitle">
+            {{ getTuvanRusAvgPercent().toFixed(2) }}%
+            {{ translationService.translate("average") }}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="card-title">
+            {{ translationService.translate("russian") }}
+          </div>
+          <div class="card-value">
+            {{ getRussianSum() | number }}
+          </div>
+          <div class="card-subtitle">
+            {{ getRussianAvgPercent().toFixed(2) }}%
+            {{ translationService.translate("average") }}
+          </div>
+        </div>
+      </div>
     </div>
-  
-    <!-- Основной контент -->
-    <div *ngIf="!isLoading && !errorMessage">
-      <div class="filters-panel">
-        <!-- Фильтр по годам -->
-        <div class="filter-group">
-          <h3>{{ translationService.translate('selectYears') }}</h3>
-          <div class="checkbox-group">
-            <label *ngFor="let year of availableYears" class="checkbox-label">
-              <input 
-                type="checkbox" 
-                [checked]="selectedYears.includes(year)"
-                (change)="onYearChange(year, $event)"
-              />
-              {{ year }}
-            </label>
-          </div>
-        </div>
-  
-        <!-- Фильтр по типу данных -->
-        <div class="filter-group">
-          <h3>{{ translationService.translate('dataType') }}</h3>
-          <div class="checkbox-group">
-            <label *ngFor="let type of availableTypes" class="checkbox-label">
-              <input 
-                type="checkbox" 
-                [checked]="selectedTypes.includes(type)"
-                (change)="onTypeChange(type, $event)"
-              />
-              {{ translationService.translateDataType(type) }}
-            </label>
-          </div>
-        </div>
-  
-        <!-- Фильтр по источникам -->
-        <div class="filter-group">
-          <h3>{{ translationService.translate('dataSources') }}</h3>
-          <div class="checkbox-group">
-            <label *ngFor="let source of availableSources" class="checkbox-label">
-              <input 
-                type="checkbox" 
-                [checked]="selectedSources.includes(source.value)"
-                (change)="onSourceChange(source.value, $event)"
-              />
-              {{ source.label }}
-            </label>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Графики -->
-      <div class="charts-container">
-        <div class="chart-wrapper">
-          <canvas #lineChart></canvas>
-        </div>
-  
-        <div class="chart-wrapper">
-          <canvas #barChart></canvas>
-        </div>
-  
-        <div class="chart-wrapper">
-          <canvas #stackedBarChart></canvas>
-        </div>
-  
-        <div class="chart-wrapper chart-small">
-          <canvas #pieChart></canvas>
-        </div>
-      </div>
-  
-      <!-- Сводная информация -->
-      <div class="data-summary" *ngIf="getFilteredData().length > 0">
-        <h3>{{ translationService.translate('summaryTitle') }}</h3>
-        <div class="summary-cards">
-          <div class="summary-card">
-            <div class="card-title">{{ translationService.translate('totalRecords') }}</div>
-            <div class="card-value">
-              {{ getTotalSum() | number }}
-            </div>
-          </div>
-          <div class="summary-card">
-            <div class="card-title">{{ translationService.translate('tuvanNgu') }}</div>
-            <div class="card-value">
-              {{ getTuvanNguSum() | number }}
-            </div>
-            <div class="card-subtitle">
-              {{ getTuvanNguAvgPercent().toFixed(2) }}% {{ translationService.translate('average') }}
-            </div>
-          </div>
-          <div class="summary-card">
-            <div class="card-title">{{ translationService.translate('tuvanRusKeyboard') }}</div>
-            <div class="card-value">
-              {{ getTuvanRusSum() | number }}
-            </div>
-            <div class="card-subtitle">
-              {{ getTuvanRusAvgPercent().toFixed(2) }}% {{ translationService.translate('average') }}
-            </div>
-          </div>
-          <div class="summary-card">
-            <div class="card-title">{{ translationService.translate('russian') }}</div>
-            <div class="card-value">
-              {{ getRussianSum() | number }}
-            </div>
-            <div class="card-subtitle">
-              {{ getRussianAvgPercent().toFixed(2) }}% {{ translationService.translate('average') }}
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Сообщение если нет данных после фильтрации -->
-      <div *ngIf="getFilteredData().length === 0" class="no-data-message">
-        <p>{{ translationService.translate('noData') }}</p>
-        <p>{{ translationService.translate('noDataHint') }}</p>
-      </div>
+
+    <div *ngIf="getFilteredData().length === 0" class="no-data-message">
+      <p>{{ translationService.translate("noData") }}</p>
+      <p>{{ translationService.translate("noDataHint") }}</p>
     </div>
   </div>
+</div>
