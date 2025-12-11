@@ -1,6 +1,7 @@
 // csv-data.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DOCUMENT } from '@angular/common';
 import { Observable, forkJoin, map } from 'rxjs';
 import * as Papa from 'papaparse';
 
@@ -33,20 +34,38 @@ interface CsvRow {
   providedIn: 'root'
 })
 export class CsvDataService {
+  private readonly basePath: string;
+
   private readonly CSV_FILES = [
     { path: 'dataset/results/results_community_media_posts.csv', source: 'community' as const },
     { path: 'dataset/results/results_gov_institutions_posts.csv', source: 'government' as const },
     { path: 'dataset/results/results_official_media_posts.csv', source: 'official' as const }
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    // Получаем base href из документа
+    const baseElement = this.document.querySelector('base');
+    this.basePath = baseElement?.getAttribute('href') || '/';
+  }
+
+  private getFullPath(relativePath: string): string {
+    // Нормализуем basePath - убираем завершающий слэш, если есть
+    const base = this.basePath.endsWith('/') ? this.basePath.slice(0, -1) : this.basePath;
+    // Убираем ведущий '/' из relativePath, если есть
+    const path = relativePath.startsWith('/') ? relativePath.slice(1) : relativePath;
+    // Собираем полный путь
+    return base === '/' ? `/${path}` : `${base}/${path}`;
+  }
 
   /**
    * Загружает все CSV файлы и преобразует их в единый массив DataRow
    */
   loadAllData(): Observable<DataRow[]> {
     const requests = this.CSV_FILES.map(file =>
-      this.loadCsvFile(file.path, file.source)
+      this.loadCsvFile(this.getFullPath(file.path), file.source)
     );
 
     return forkJoin(requests).pipe(
