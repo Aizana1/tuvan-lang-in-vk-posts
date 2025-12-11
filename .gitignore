@@ -39,8 +39,13 @@ ENV/
 data/*
 !data/PopulationData.csv
 
-!assets/*.csv
-!assets/**/*.csv
+# Allow CSV files in src/assets
+!src/assets/*.csv
+!src/assets/**/*.csv
+
+# Allow CSV files in docs/assets (после билда)
+!docs/assets/*.csv
+!docs/assets/**/*.csv
 
 # Logs
 *.log
