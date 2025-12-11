@@ -39,6 +39,9 @@ ENV/
 data/*
 !data/PopulationData.csv
 
+!assets/*.csv
+!assets/**/*.csv
+
 # Logs
 *.log
 logs/
