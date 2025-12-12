@@ -13,7 +13,7 @@
 2. текст на тувинском с русской клавиатурой
 3. текст на русском
 
-Результаты загружены в виде графиков и диаграм в ```dataset/visualizations```
+Опубликован по адресу - https://aizana1.github.io/tuvan-lang-in-vk-posts/
 
 ## in English
 
@@ -31,4 +31,4 @@ The data is collected and then analyzed by the ```tuvan_detector.py``` script, a
 2. Tuvan text typed using a Russian keyboard layout
 3. Russian text
 
-The results are provided as charts and diagrams in ```dataset/visualizations```
+Published at https://aizana1.github.io/tuvan-lang-in-vk-posts/
