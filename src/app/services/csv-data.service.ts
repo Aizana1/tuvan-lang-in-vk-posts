@@ -15,7 +15,7 @@ export interface DataRow {
   tuvanRusPercent: number;
   russianCol: number;
   russianPercent: number;
-  source: 'community' | 'government' | 'official'; // Источник данных
+  source: 'community' | 'government' | 'official';
 }
 
 interface CsvRow {
@@ -46,7 +46,6 @@ export class CsvDataService {
     private http: HttpClient,
     @Inject(DOCUMENT) private document: Document
   ) {
-    // Получаем base href из документа
     const baseElement = this.document.querySelector('base');
     this.basePath = baseElement?.getAttribute('href') || '/';
   }
@@ -60,9 +59,6 @@ export class CsvDataService {
     return base === '/' ? `/${path}` : `${base}/${path}`;
   }
 
-  /**
-   * Загружает все CSV файлы и преобразует их в единый массив DataRow
-   */
   loadAllData(): Observable<DataRow[]> {
     const requests = this.CSV_FILES.map(file =>
       this.loadCsvFile(this.getFullPath(file.path), file.source)
@@ -73,18 +69,12 @@ export class CsvDataService {
     );
   }
 
-  /**
-   * Загружает один CSV файл
-   */
   private loadCsvFile(path: string, source: DataRow['source']): Observable<DataRow[]> {
     return this.http.get(path, { responseType: 'text' }).pipe(
       map(csvText => this.parseCsv(csvText, source))
     );
   }
 
-  /**
-   * Парсит CSV текст в массив DataRow
-   */
   private parseCsv(csvText: string, source: DataRow['source']): DataRow[] {
     const parseResult = Papa.parse<CsvRow>(csvText, {
       header: true,
@@ -99,9 +89,6 @@ export class CsvDataService {
     return parseResult.data.map(row => this.transformRow(row, source));
   }
 
-  /**
-   * Преобразует строку CSV в объект DataRow
-   */
   private transformRow(row: CsvRow, source: DataRow['source']): DataRow {
     return {
       year: parseInt(row.Год, 10),
@@ -117,9 +104,6 @@ export class CsvDataService {
     };
   }
 
-  /**
-   * Получает список доступных источников данных
-   */
   getAvailableSources(): Array<{ value: DataRow['source'], label: string }> {
     return [
       { value: 'community', label: 'Сообщества' },
@@ -128,9 +112,6 @@ export class CsvDataService {
     ];
   }
 
-  /**
-   * Фильтрует данные по различным параметрам
-   */
   filterData(
     data: DataRow[],
     years: number[],
@@ -145,16 +126,10 @@ export class CsvDataService {
     });
   }
 
-  /**
-   * Получает уникальные года из данных
-   */
   getUniqueYears(data: DataRow[]): number[] {
     return [...new Set(data.map(row => row.year))].sort();
   }
 
-  /**
-   * Получает уникальные типы из данных
-   */
   getUniqueTypes(data: DataRow[]): string[] {
     return [...new Set(data.map(row => row.type))].sort();
   }

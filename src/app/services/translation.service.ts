@@ -56,7 +56,7 @@ export class TranslationService {
         "Цифровая карта языкового ландшафта Республики Тыва (2018-2025)",
       aboutProjectTitle: "О проекте",
       aboutProject:
-        "Данное исследование представляет собой комплексный анализ языковых практик в цифровом пространстве Республики Тыва. В основе работы лежит изучение 5000 постов и комментариев, собранных через VK API из трёх типов сообществ: официальных групп государственных учреждений, региональных медиа и местных общественных объединений.",
+        "Данное исследование представляет собой комплексный анализ языковых практик в цифровом пространстве Республики Тыва. В основе работы лежит изучение 407.000 постов и комментариев, собранных через VK API из трёх типов сообществ: официальных групп государственных учреждений, региональных медиа и местных общественных объединений.",
       methodologyTitle: "Методология",
       methodology: `Исследование выявляет три основных языковых категории в онлайн-коммуникации:<br><br>
     <b>Тувинский язык с использованием специальных символов (ң, ө, ү, Ң, Ө, Ү)</b> — тексты, сохраняющие аутентичную орфографию тувинского языка и отражающие стремление пользователей к языковой точности. <br><br>
@@ -105,7 +105,7 @@ export class TranslationService {
         "Digital Map of the Language Landscape of the Tuva Republic (2018-2025)",
       aboutProjectTitle: "About the Project",
       aboutProject:
-        "This research presents a comprehensive analysis of language practices in the digital space of the Tuva Republic. The study examines 5,000 posts and comments collected via VK API from three types of communities: official government institution groups, regional media outlets, and local community associations.",
+        "This research presents a comprehensive analysis of language practices in the digital space of the Tuva Republic. The study examines 407,000 posts and comments collected via VK API from three types of communities: official government institution groups, regional media outlets, and local community associations.",
       methodologyTitle: "Methodology",
       methodology:
         "The research identifies three main language categories in online communication: <br><br><b>Tuvan language with special characters (ң, ө, ү, Ң, Ө, Ү)</b> — texts preserving authentic Tuvan orthography and reflecting users' commitment to linguistic accuracy. <br><br><b>Tuvan language in Cyrillic</b> — adapted texts without special letters. A heuristic analysis system was developed for their identification, based on recognizing characteristic Tuvan word forms, suffixes, and grammatical patterns, which made it possible to distinguish Tuvan texts from Russian ones within the shared Cyrillic script. <br><br><b>Russian language</b> — texts in the state language of the Russian Federation.",
