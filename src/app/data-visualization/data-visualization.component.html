@@ -24,24 +24,26 @@
 
   <h1>{{ translationService.translate("pageTitle") }}</h1>
 
-  <div>
-    <h3>{{ translationService.translate("aboutProjectTitle") }}</h3>
-    <div>{{ translationService.translate("aboutProject") }}</div>
-  </div>
+  <div class="project-description">
+    <div>
+      <h3>{{ translationService.translate("aboutProjectTitle") }}</h3>
+      <div>{{ translationService.translate("aboutProject") }}</div>
+    </div>
 
-  <div>
-    <h3>{{ translationService.translate("methodologyTitle") }}</h3>
-    <div [innerHTML]="translationService.translate('methodology')"></div>
-  </div>
+    <div>
+      <h3>{{ translationService.translate("methodologyTitle") }}</h3>
+      <div [innerHTML]="translationService.translate('methodology')"></div>
+    </div>
 
-  <div>
-    <h3>{{ translationService.translate("significanceTitle") }}</h3>
-    <div [innerHTML]="translationService.translate('significance')"></div>
-  </div>
+    <div>
+      <h3>{{ translationService.translate("significanceTitle") }}</h3>
+      <div [innerHTML]="translationService.translate('significance')"></div>
+    </div>
 
-  <div *ngIf="isLoading" class="loading-container">
-    <div class="spinner"></div>
-    <p>{{ translationService.translate("loading") }}</p>
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>{{ translationService.translate("loading") }}</p>
+    </div>
   </div>
 
   <div *ngIf="errorMessage" class="error-message">
@@ -50,68 +52,6 @@
   </div>
 
   <div *ngIf="!isLoading && !errorMessage">
-    <div class="filters-panel">
-      <div class="filter-group">
-        <h3>{{ translationService.translate("selectYears") }}</h3>
-        <div class="checkbox-group">
-          <label *ngFor="let year of availableYears" class="checkbox-label">
-            <input
-              type="checkbox"
-              [checked]="selectedYears.includes(year)"
-              (change)="onYearChange(year, $event)"
-            />
-            {{ year }}
-          </label>
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <h3>{{ translationService.translate("dataType") }}</h3>
-        <div class="checkbox-group">
-          <label *ngFor="let type of availableTypes" class="checkbox-label">
-            <input
-              type="checkbox"
-              [checked]="selectedTypes.includes(type)"
-              (change)="onTypeChange(type, $event)"
-            />
-            {{ translationService.translateDataType(type) }}
-          </label>
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <h3>{{ translationService.translate("dataSources") }}</h3>
-        <div class="checkbox-group">
-          <label *ngFor="let source of availableSources" class="checkbox-label">
-            <input
-              type="checkbox"
-              [checked]="selectedSources.includes(source.value)"
-              (change)="onSourceChange(source.value, $event)"
-            />
-            {{ source.label }}
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="charts-container">
-      <div class="chart-wrapper">
-        <canvas #lineChart></canvas>
-      </div>
-
-      <div class="chart-wrapper">
-        <canvas #barChart></canvas>
-      </div>
-
-      <div class="chart-wrapper">
-        <canvas #stackedBarChart></canvas>
-      </div>
-
-      <div class="chart-wrapper chart-small">
-        <canvas #pieChart></canvas>
-      </div>
-    </div>
-
     <div class="data-summary" *ngIf="getFilteredData().length > 0">
       <h3>{{ translationService.translate("summaryTitle") }}</h3>
       <div class="summary-cards">
@@ -158,6 +98,73 @@
             {{ getRussianAvgPercent().toFixed(2) }}%
             {{ translationService.translate("average") }}
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-cointaner">
+      <div class="filters-panel">
+        <div class="filter-group">
+          <h3>{{ translationService.translate("selectYears") }}</h3>
+          <div class="checkbox-group">
+            <label *ngFor="let year of availableYears" class="checkbox-label">
+              <input
+                type="checkbox"
+                [checked]="selectedYears.includes(year)"
+                (change)="onYearChange(year, $event)"
+              />
+              {{ year }}
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>{{ translationService.translate("dataType") }}</h3>
+          <div class="checkbox-group">
+            <label *ngFor="let type of availableTypes" class="checkbox-label">
+              <input
+                type="checkbox"
+                [checked]="selectedTypes.includes(type)"
+                (change)="onTypeChange(type, $event)"
+              />
+              {{ translationService.translateDataType(type) }}
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>{{ translationService.translate("dataSources") }}</h3>
+          <div class="checkbox-group">
+            <label
+              *ngFor="let source of availableSources"
+              class="checkbox-label"
+            >
+              <input
+                type="checkbox"
+                [checked]="selectedSources.includes(source.value)"
+                (change)="onSourceChange(source.value, $event)"
+              />
+              {{ source.label }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="charts-container">
+        <div class="chart-wrapper">
+          <canvas #lineChart></canvas>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas #barChart></canvas>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas #stackedBarChart></canvas>
+        </div>
+
+        <div class="chart-wrapper chart-small">
+          <canvas #pieChart></canvas>
         </div>
       </div>
     </div>
