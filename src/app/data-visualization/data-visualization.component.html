@@ -24,6 +24,21 @@
 
   <h1>{{ translationService.translate("pageTitle") }}</h1>
 
+  <div>
+    <h3>{{ translationService.translate("aboutProjectTitle") }}</h3>
+    <div>{{ translationService.translate("aboutProject") }}</div>
+  </div>
+
+  <div>
+    <h3>{{ translationService.translate("methodologyTitle") }}</h3>
+    <div [innerHTML]="translationService.translate('methodology')"></div>
+  </div>
+
+  <div>
+    <h3>{{ translationService.translate("significanceTitle") }}</h3>
+    <div [innerHTML]="translationService.translate('significance')"></div>
+  </div>
+
   <div *ngIf="isLoading" class="loading-container">
     <div class="spinner"></div>
     <p>{{ translationService.translate("loading") }}</p>

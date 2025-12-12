@@ -10,6 +10,12 @@ interface Translations {
 
 interface Translation {
   pageTitle: string;
+  aboutProjectTitle: string;
+  aboutProject: string;
+  methodologyTitle: string;
+  methodology: string;
+  significanceTitle: string;
+  significance: string;
   selectYears: string;
   dataType: string;
   dataSources: string;
@@ -46,8 +52,19 @@ export class TranslationService {
 
   private translations: Translations = {
     ru: {
-      pageTitle: "Анализ данных по языкам (2018-2025)",
-
+      pageTitle:
+        "Цифровая карта языкового ландшафта Республики Тыва (2018-2025)",
+      aboutProjectTitle: "О проекте",
+      aboutProject:
+        "Данное исследование представляет собой комплексный анализ языковых практик в цифровом пространстве Республики Тыва. В основе работы лежит изучение 5000 постов и комментариев, собранных через VK API из трёх типов сообществ: официальных групп государственных учреждений, региональных медиа и местных общественных объединений.",
+      methodologyTitle: "Методология",
+      methodology: `Исследование выявляет три основных языковых категории в онлайн-коммуникации:<br><br>
+    <b>Тувинский язык с использованием специальных символов (ң, ө, ү, Ң, Ө, Ү)</b> — тексты, сохраняющие аутентичную орфографию тувинского языка и отражающие стремление пользователей к языковой точности. <br><br>
+      <b>Тувинский язык на кириллице</b> — адаптированные тексты без специальных букв. Для их идентификации была разработана эвристическая система анализа, основанная на распознавании характерных тувинских словоформ, суффиксов и грамматических паттернов, что позволило отделить тувинские тексты от русскоязычных в условиях общей кириллической графики. <br><br>
+      <b>Русский язык</b> — тексты на государственном языке Российской Федерации.`,
+      significanceTitle: "Значимость работы",
+      significance:
+        "Исследование документирует живую языковую ситуацию в цифровой среде региона, показывая, как носители тувинского языка адаптируют его к ограничениям клавиатурных раскладок и технических возможностей социальных платформ. Полученные данные визуализированы в форме графиков и диаграмм, что позволяет наглядно проследить баланс между русским и тувинским языками в различных типах сообществ. <br><br>Этот проект вносит вклад в изучение витальности языков коренных народов России в цифровую эпоху и может быть полезен лингвистам, социологам, специалистам по языковой политике и всем, кто интересуется сохранением культурного многообразия в онлайн-пространстве.",
       selectYears: "Выберите годы:",
       dataType: "Тип данных:",
       dataSources: "Источники данных:",
@@ -84,8 +101,17 @@ export class TranslationService {
       switchLanguage: "Switch to English",
     },
     en: {
-      pageTitle: "Language Data Analysis (2018-2025)",
-
+      pageTitle:
+        "Digital Map of the Language Landscape of the Tuva Republic (2018-2025)",
+      aboutProjectTitle: "About the Project",
+      aboutProject:
+        "This research presents a comprehensive analysis of language practices in the digital space of the Tuva Republic. The study examines 5,000 posts and comments collected via VK API from three types of communities: official government institution groups, regional media outlets, and local community associations.",
+      methodologyTitle: "Methodology",
+      methodology:
+        "The research identifies three main language categories in online communication: <br><br><b>Tuvan language with special characters (ң, ө, ү, Ң, Ө, Ү)</b> — texts preserving authentic Tuvan orthography and reflecting users' commitment to linguistic accuracy. <br><br><b>Tuvan language in Cyrillic</b> — adapted texts without special letters. A heuristic analysis system was developed for their identification, based on recognizing characteristic Tuvan word forms, suffixes, and grammatical patterns, which made it possible to distinguish Tuvan texts from Russian ones within the shared Cyrillic script. <br><br><b>Russian language</b> — texts in the state language of the Russian Federation.",
+      significanceTitle: "Significance",
+      significance:
+        "The research documents the living language situation in the region's digital environment, showing how Tuvan speakers adapt their language to the limitations of keyboard layouts and technical capabilities of social platforms. The collected data is visualized through charts and diagrams, providing clear insights into the balance between Russian and Tuvan languages across different community types. <br><br>This project contributes to the study of indigenous language vitality in Russia's digital age and may be valuable to linguists, sociologists, language policy specialists, and anyone interested in preserving cultural diversity in online spaces.",
       selectYears: "Select years:",
       dataType: "Data type:",
       dataSources: "Data sources:",
