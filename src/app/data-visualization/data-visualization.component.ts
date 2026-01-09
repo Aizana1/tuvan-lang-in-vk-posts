@@ -171,11 +171,9 @@ export class DataVisualizationComponent
   }
 
   getTuvanNguAvgPercent(): number {
-    const data = this.getFilteredData();
-    if (data.length === 0) return 0;
-    return (
-      data.reduce((sum, row) => sum + row.tuvanNguPercent, 0) / data.length
-    );
+    const total = this.getTotalSum();
+    const value = this.getTuvanNguSum();
+    return Number(((value / total) * 100).toFixed(1));
   }
 
   getTuvanRusSum(): number {
@@ -186,11 +184,9 @@ export class DataVisualizationComponent
   }
 
   getTuvanRusAvgPercent(): number {
-    const data = this.getFilteredData();
-    if (data.length === 0) return 0;
-    return (
-      data.reduce((sum, row) => sum + row.tuvanRusPercent, 0) / data.length
-    );
+    const total = this.getTotalSum();
+    const value = this.getTuvanRusSum();
+    return Number(((value / total) * 100).toFixed(1));
   }
 
   getRussianSum(): number {
@@ -198,9 +194,9 @@ export class DataVisualizationComponent
   }
 
   getRussianAvgPercent(): number {
-    const data = this.getFilteredData();
-    if (data.length === 0) return 0;
-    return data.reduce((sum, row) => sum + row.russianPercent, 0) / data.length;
+    const total = this.getTotalSum();
+    const value = this.getRussianSum();
+    return Number(((value / total) * 100).toFixed(1));
   }
 
   updateCharts(): void {
